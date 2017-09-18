@@ -8,7 +8,7 @@ Quickstart
 ---
 **Scenario**
 
-Move only 'body' parts of the messages from RabbitMQ to Kafka topic. Optional step - read from kafka topic and display them on your screen.
+Move only 'body' parts of the messages from RabbitMQ to Kafka topic. Optional step - read messages from kafka topic and display them on your terminal screen.
 
 **Step-by-step guide**
 
@@ -39,7 +39,7 @@ If you want to see those messages in you console, start sample consumer:
 ```
 Parameters
 ---
-For more details ragarding Kafka' docker parameters please reffer to the source image: https://github.com/spotify/docker-kafka
+For more details ragarding Kafka' docker parameters please refer to the source image: https://github.com/spotify/docker-kafka
 
 Public Builds
 ---
