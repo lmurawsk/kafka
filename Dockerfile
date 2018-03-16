@@ -36,9 +36,19 @@ RUN apt-get update && \
     apt-get install -y zookeeper wget supervisor dnsutils git vim && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean && \
-    wget -q http://apache.mirrors.spacedump.net/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -O /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz && \
+    wget -q https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -O /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz && \
     tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt && \
     rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
+
+# Confluent Platform v3.1.1 install
+ENV CONFLUENT_PLATFORM_VERSION 3.1.1
+RUN apt-get update && \
+    apt-get install -y wget gnupg software-properties-common && \
+    wget -qO - http://packages.confluent.io/deb/3.1/archive.key | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] http://packages.confluent.io/deb/3.1 stable main" && \
+    apt-get update && apt-get install -y confluent-platform-oss-2.11 && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
 
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
 
