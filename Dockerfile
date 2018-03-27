@@ -12,7 +12,7 @@ ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 ARG MAVEN_VERSION=3.5.0
 ARG USER_HOME_DIR="/root"
 ARG SHA=beb91419245395bd69a4a6edad5ca3ec1a8b64e41457672dc687c173a495f034
-ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG BASE_URL=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${MAVEN_VERSION}
 
 # Install maven
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref && \
@@ -57,12 +57,12 @@ ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
 
 # create Kafka Connect Jars...
 # RabbitMQ connect
-RUN git clone https://github.com/jcustenborder/kafka-connect-rabbitmq.git
+RUN git clone https://github.com/jcustenborder/kafka-connect-rabbitmq.git /kafka-connect-rabbitmq
 WORKDIR /kafka-connect-rabbitmq
 RUN mvn compile && \
     mvn package && \
     mvn install && \
-    cp target/kafka-connect-target/usr/share/java/kafka-connect-rabbitmq/* ${KAFKA_HOME}/libs/ && \
+    cp target/kafka-connect-target/usr/share/kafka-connect/kafka-connect-rabbitmq/* ${KAFKA_HOME}/libs/ && \
     rm -rf /kafka-connect-rabbitmq
 
 # 2181 is zookeeper, 9092 is kafka
